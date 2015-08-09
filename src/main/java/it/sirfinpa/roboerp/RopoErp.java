@@ -45,22 +45,7 @@ public class RopoErp {
             System.exit( exitCode );
         }
     }
-/*
-    private void cartellino() {
-        loadHome();
-        doLogin();
-        fixedWait(5);
 
-        SideMenu menu = SideMenu.getInstance(driver);
-        menu.goToCartellino();
-        fixedWait(3);
-
-        performDaily();
-
-        fixedWait(3);
-        doLogout();
-    }
-*/
     private void parseCommandLine(String[] args) throws CmdLineException {
         cliOptions = new OptionParser(args).getOptions();
     }
@@ -83,75 +68,6 @@ public class RopoErp {
         erpFlow = new DailyFlow(driver, ExecutionContextHolder.getExecutionContext());
     }
 
-/*
-    private WebElement findLogout(){
-        logger.info("find logout element...");
-        WebElement element = driver.findElement(By.cssSelector("img.logout.z-image"));
-        logger.info("logout element: " + element);
-        return element;
-    }
-    private void loadHome(){
-        driver.get(RoboProperty.getErpHomeUrl());
-        driver.getPageSource();
-    }
-
-    private void doLogin(){
-        LoginForm.getInstance(driver)
-                .submit(RoboProperty.getUsername(), RoboProperty.getPassword());
-    }
-
-    private void doLogout() {
-        findLogout().click();
-    }
-
-
-    private void  performDaily(){
-        if (cliOptions.getMonth()!=null){
-            logger.info("switch to month: " + cliOptions.getMonth());
-            MonthTab.getInstance(driver).goTo(cliOptions.getMonth());
-            fixedWait(2);
-        }
-        if (cliOptions.getDayList() !=null){
-            logger.info("day list: " + cliOptions.getDayList());
-            for (String currentDay: cliOptions.getDayList().split(",")){ performDaily(Integer.valueOf(currentDay)); }
-            fixedWait(3);
-        }
-        else{ performDaily(determineDayOfMonth()); }
-
-    }
-
-    private void performDaily(int dayOfMonth){
-        logger.info("perform daily: " + dayOfMonth);
-        logger.info("daily time profile: " + Arrays.toString(RoboProperty.getDailyProfile()));
-
-        CartellinoGrid cartellinoGrid =
-                CartellinoGrid.getInstance(driver).goToPage(dayOfMonth > CartellinoGrid.PAGE_SIZE ? 2 : 1);
-
-        cartellinoGrid.clickDay(dayOfMonth);
-
-        CartellinoForm cartellinoForm = CartellinoForm.getInstance(driver);
-        boolean odd = true;
-        for (String dailyElement:RoboProperty.getDailyProfile()){
-            cartellinoForm = cartellinoForm.addTransit(dailyElement, odd ? CartellinoForm.TransitType.IN : CartellinoForm.TransitType.OUT);
-            odd=!odd;
-        }
-        takeScreenShot();
-        //fine
-        cartellinoForm.exit();
-    }
-
-    private void fixedWait(int seconds){
-        try { Thread.sleep((seconds*1000)); }
-        catch (InterruptedException e) {
-            logger.error(e, e);
-        }
-    }
-
-    private int determineDayOfMonth(){
-        return new GregorianCalendar().get(GregorianCalendar.DAY_OF_MONTH);
-    }
-    */
-
     private void close(){
         if (driver!=null){
             driver.close();
@@ -159,17 +75,6 @@ public class RopoErp {
         }
     }
 
-    /*
-    private void takeScreenShot(){
-        try {
-            File ss = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(ss, new File("sshot_" + System.currentTimeMillis() + ".png"));
-        }
-        catch (Exception e){
-            logger.error(e);
-        }
-    }
-*/
     private InputStream findPropertiesFile() throws FileNotFoundException {
         InputStream out = this.getClass().getResourceAsStream("/setting.properties");
         if (out==null){
