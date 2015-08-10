@@ -1,7 +1,7 @@
 package it.sirfinpa.roboerp.flow;
 
-import it.sirfinpa.roboerp.component.CartellinoForm;
-import it.sirfinpa.roboerp.component.CartellinoGrid;
+import it.sirfinpa.roboerp.component.DailyTransitForm;
+import it.sirfinpa.roboerp.component.MonthlyTransitGrid;
 import it.sirfinpa.roboerp.component.MonthTab;
 import it.sirfinpa.roboerp.component.SideMenu;
 import it.sirfinpa.roboerp.context.ExecutionContext;
@@ -54,19 +54,19 @@ public class DailyFlow extends AbstractFlow implements ErpFlow {
         logger.info("perform daily: " + dayOfMonth);
         logger.info("daily time profile: " + Arrays.toString(context.getDailyProfile()));
 
-        CartellinoGrid cartellinoGrid =
-                CartellinoGrid.getInstance(driver).goToPage(dayOfMonth > CartellinoGrid.PAGE_SIZE ? 2 : 1);
+        MonthlyTransitGrid monthlyTransitGrid =
+                MonthlyTransitGrid.getInstance(driver).goToPage(dayOfMonth > MonthlyTransitGrid.PAGE_SIZE ? 2 : 1);
 
-        cartellinoGrid.clickDay(dayOfMonth);
+        monthlyTransitGrid.clickDay(dayOfMonth);
 
-        CartellinoForm cartellinoForm = CartellinoForm.getInstance(driver);
+        DailyTransitForm transitForm = DailyTransitForm.getInstance(driver);
         boolean odd = true;
         for (String dailyElement:context.getDailyProfile()){
-            cartellinoForm = cartellinoForm.addTransit(dailyElement, odd ? CartellinoForm.TransitType.IN : CartellinoForm.TransitType.OUT);
+            transitForm = transitForm.addTransit(dailyElement, odd ? DailyTransitForm.TransitType.IN : DailyTransitForm.TransitType.OUT);
             odd=!odd;
         }
         takeScreenShot();
         //fine
-        cartellinoForm.exit();
+        transitForm.exit();
     }
 }

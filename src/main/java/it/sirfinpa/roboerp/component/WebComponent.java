@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public abstract class WebComponent {
 
@@ -39,7 +40,7 @@ public abstract class WebComponent {
     }
 
     protected void init(){
-        logger.info("Init component");
+        if (logger.isDebugEnabled()){ logger.debug("Init component"); }
         fromDriver();
         if (logger.isDebugEnabled()){ logger.debug(toString()); }
     }
@@ -50,5 +51,9 @@ public abstract class WebComponent {
         return new ReflectionToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
                 .setExcludeFieldNames("webDriver", "dirty")
                 .toString();
+    }
+
+    protected WebDriverWait waitWithTimeout(int seconds){
+        return new WebDriverWait(webDriver, seconds);
     }
 }

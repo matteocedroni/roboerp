@@ -11,14 +11,14 @@ import java.util.List;
 /**
  * Pagina corrente griglia riepilogo transiti giornalieri
  */
-public class CartellinoGrid extends WebComponent {
+public class MonthlyTransitGrid extends WebComponent {
 
     public static final int PAGE_SIZE = 16;
 
     private WebElement[] dayRows;
     private WebElement pagingInput;
 
-    public CartellinoGrid(WebDriver webDriver) {
+    public MonthlyTransitGrid(WebDriver webDriver) {
         super(webDriver);
     }
 
@@ -31,14 +31,14 @@ public class CartellinoGrid extends WebComponent {
         this.pagingInput = pagingInput;
     }
 
-    public CartellinoGrid goToPage(int page){
+    public MonthlyTransitGrid goToPage(int page){
         pagingInput.click();
         pagingInput.clear();
         pagingInput.sendKeys( String.valueOf(page) );
         pagingInput.sendKeys(Keys.TAB);
 
         fixedWait(2);
-        return CartellinoGrid.getInstance(webDriver);
+        return MonthlyTransitGrid.getInstance(webDriver);
     }
 
     public void clickDay(int day){
@@ -46,8 +46,8 @@ public class CartellinoGrid extends WebComponent {
     }
 
 
-    public static CartellinoGrid getInstance(WebDriver driver){
-        CartellinoGrid out = new CartellinoGrid(driver);
+    public static MonthlyTransitGrid getInstance(WebDriver driver){
+        MonthlyTransitGrid out = new MonthlyTransitGrid(driver);
         out.init();
 
         return out;
