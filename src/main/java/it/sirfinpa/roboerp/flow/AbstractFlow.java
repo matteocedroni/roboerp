@@ -1,11 +1,13 @@
 package it.sirfinpa.roboerp.flow;
 
 
+import it.sirfinpa.roboerp.component.ComponentHelper;
 import it.sirfinpa.roboerp.component.LoginForm;
 import it.sirfinpa.roboerp.context.ExecutionContext;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.io.File;
 
@@ -30,6 +32,7 @@ public abstract class AbstractFlow implements ErpFlow{
     protected void doLogin(){
         LoginForm.getInstance(driver)
                 .submit(context.getUsername(), context.getPassword());
+        waitForMainPage();
     }
 
     protected void doLogout() {
@@ -64,6 +67,10 @@ public abstract class AbstractFlow implements ErpFlow{
         }
     }
 
-
+    protected void waitForMainPage(){
+        ComponentHelper.waitWithTimeout(driver, 10).until(
+                ExpectedConditions.elementToBeClickable(By.cssSelector("img.logout.z-image"))
+        );
+    }
 
 }

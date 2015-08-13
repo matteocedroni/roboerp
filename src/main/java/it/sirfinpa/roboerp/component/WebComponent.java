@@ -52,8 +52,4 @@ public abstract class WebComponent {
                 .setExcludeFieldNames("webDriver", "dirty")
                 .toString();
     }
-
-    protected WebDriverWait waitWithTimeout(int seconds){
-        return new WebDriverWait(webDriver, seconds);
-    }
 }

@@ -5,6 +5,7 @@ import it.sirfinpa.roboerp.cli.OptionParser;
 import it.sirfinpa.roboerp.context.ExecutionContextHolder;
 import it.sirfinpa.roboerp.flow.DailyFlow;
 import it.sirfinpa.roboerp.flow.ErpFlow;
+import it.sirfinpa.roboerp.flow.LoginLogoutFlow;
 import it.sirfinpa.roboerp.webdriver.WebDriverFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,9 +35,17 @@ public class ErpFlowTest {
 
     @Test
     public void testDayList() throws CmdLineException {
-        ExecutionContextHolder.init(new OptionParser(new String[]{"-d=7", "-m=8"}).getOptions(), property);
+        ExecutionContextHolder.init(new OptionParser(new String[]{"-d=6,7", "-m=8"}).getOptions(), property);
 
         ErpFlow erpFlow = new DailyFlow(initDriver(), ExecutionContextHolder.getExecutionContext());
+        erpFlow.execute();
+    }
+
+    @Test
+    public void testLogin() throws CmdLineException {
+        ExecutionContextHolder.init(new OptionParser(new String[]{}).getOptions(), property);
+
+        ErpFlow erpFlow = new LoginLogoutFlow(initDriver(), ExecutionContextHolder.getExecutionContext());
         erpFlow.execute();
     }
 

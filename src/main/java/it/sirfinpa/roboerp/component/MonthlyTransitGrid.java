@@ -5,11 +5,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
 /**
- * Pagina corrente griglia riepilogo transiti giornalieri
+ * Pagina corrente griglia riepilogo transiti mensili
  */
 public class MonthlyTransitGrid extends WebComponent {
 
@@ -31,14 +32,16 @@ public class MonthlyTransitGrid extends WebComponent {
         this.pagingInput = pagingInput;
     }
 
-    public MonthlyTransitGrid goToPage(int page){
-        pagingInput.click();
-        pagingInput.clear();
-        pagingInput.sendKeys( String.valueOf(page) );
-        pagingInput.sendKeys(Keys.TAB);
+    public void goToPage(int page){
+        if (getCurrentPageNumber()!=page) {
+            pagingInput.click();
+            pagingInput.clear();
+            pagingInput.sendKeys(String.valueOf(page));
+            pagingInput.sendKeys(Keys.TAB);
 
-        fixedWait(2);
-        return MonthlyTransitGrid.getInstance(webDriver);
+            //attesa rimozione ultimo elemento griglia
+            ComponentHelper.waitWithTimeout(webDriver, 5).until(ExpectedConditions.stalenessOf(dayRows[dayRows.length - 1]));
+        }
     }
 
     public void clickDay(int day){
@@ -51,6 +54,10 @@ public class MonthlyTransitGrid extends WebComponent {
         out.init();
 
         return out;
+    }
+
+    public int getCurrentPageNumber(){
+        return Integer.valueOf(pagingInput.getAttribute("value"));
     }
 
 }

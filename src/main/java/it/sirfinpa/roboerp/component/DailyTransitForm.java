@@ -54,7 +54,7 @@ public class DailyTransitForm extends WebComponent {
         return out;
     }
 
-    public DailyTransitForm addTransit(String time, TransitType type){
+    public void addTransit(String time, TransitType type){
         logger.info(String.format("add transit [%1$s] --> [%2$s]", time, type.getType().toString()));
 
         timeBox.click();
@@ -63,27 +63,11 @@ public class DailyTransitForm extends WebComponent {
         timeBox.sendKeys(time);
         new Select( transitType ).selectByVisibleText(type.getType());
         saveButton.click();
-
-        waitForTransitProcess();
-
-        return getInstance(webDriver);
-    }
-
-    private void waitForTransitProcess(){
-        //Attesa presenza messaggio esito positivo
-        WebElement resultMessage = webDriver.findElement(By.xpath(".//div[contains(text(),\"WFW1000000\")]"));
-        /*
-         * Attesa termine messaggio esito positivo.
-         * La combo rappresentante la tipologia transito, e' soggetta ad aggiornamento DOM dopo ogni inserimento
-         * transito. Attendere il termine del messaggio, si e' dimostrato il riferimento piu' affidabile per
-         * garantire di istanziare il nuovo form dopo l'aggiornamento della combo ed evitare
-         * la StaleElementReferenceException nel successivo accesso al componente.
-         */
-        waitWithTimeout(5).until(ExpectedConditions.stalenessOf(resultMessage));
     }
 
     public void exit(){
         exitButton.click();
+        ComponentHelper.waitWithTimeout(webDriver, 5).until(ExpectedConditions.stalenessOf(dialogRoot));
     }
 
 
