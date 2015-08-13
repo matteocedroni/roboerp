@@ -44,6 +44,7 @@ public class ExecutionContextHolder {
                 daySet.add(Integer.valueOf(dayString));
             }
             dayList = ArrayUtils.toPrimitive(daySet.toArray(new Integer[]{}));
+            Arrays.sort(dayList);
         }
 
         return dayList;
