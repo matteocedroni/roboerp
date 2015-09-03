@@ -1,6 +1,7 @@
 package it.sirfinpa.roboerp;
 
 import it.sirfinpa.roboerp.cli.CliOptions;
+import it.sirfinpa.roboerp.cli.CliHeader;
 import it.sirfinpa.roboerp.cli.OptionParser;
 import it.sirfinpa.roboerp.context.ExecutionContextHolder;
 import it.sirfinpa.roboerp.flow.DailyFlow;
@@ -30,6 +31,7 @@ public class RopoErp {
 
         RopoErp ropoErp = new RopoErp();
         try {
+            CliHeader.showHeader();
             ropoErp.parseCommandLine(args);
             if (!ropoErp.cliOptions.isHelp()){
                 ropoErp.init(args);
@@ -84,4 +86,5 @@ public class RopoErp {
 
         return out;
     }
+
 }

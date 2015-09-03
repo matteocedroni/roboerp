@@ -37,6 +37,7 @@ public abstract class AbstractFlow implements ErpFlow{
 
     protected void doLogout() {
         findLogout().click();
+        logger.info("logged out");
     }
 
     protected void takeScreenShot(){
@@ -54,9 +55,9 @@ public abstract class AbstractFlow implements ErpFlow{
     }
 
     protected WebElement findLogout(){
-        logger.info("find logout element...");
+        if(logger.isDebugEnabled()) { logger.info("find logout element..."); }
         WebElement element = driver.findElement(By.cssSelector("img.logout.z-image"));
-        logger.info("logout element: " + element);
+        if(logger.isDebugEnabled()) { logger.info("logout element: " + element); }
         return element;
     }
 
