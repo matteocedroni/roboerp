@@ -91,11 +91,14 @@ public class DailyFlow extends AbstractFlow implements ErpFlow {
 
     private MonthlyTransitGrid prepareMonthlyGrid(int dayToEdit) {
         MonthlyTransitGrid monthlyTransitGrid = MonthlyTransitGrid.getInstance(driver);
-        //se la griglia non contiene il giorno da editare, viene cambiata pagina
+        /*
+         * se la griglia non contiene il giorno da editare, viene cambiata pagina
+         * non piu' utilizzato tutte le giornate mensili sono presenti su singola pagina.
         if (dayToEdit > MonthlyTransitGrid.PAGE_SIZE && monthlyTransitGrid.getCurrentPageNumber() != 2) {
             monthlyTransitGrid.goToPage(2);
             monthlyTransitGrid = MonthlyTransitGrid.getInstance(driver);
         }
+        */
         return monthlyTransitGrid;
     }
 

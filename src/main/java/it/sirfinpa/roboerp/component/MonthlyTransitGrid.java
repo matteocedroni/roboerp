@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class MonthlyTransitGrid extends WebComponent {
 
+    //  non piu' utilizzato tutte le giornate mensili sono presenti su singola pagina.
     public static final int PAGE_SIZE = 16;
 
     private WebElement[] dayRows;
@@ -32,6 +33,9 @@ public class MonthlyTransitGrid extends WebComponent {
         this.pagingInput = pagingInput;
     }
 
+    /**
+     * @deprecated  tutte le giornate mensili sono presenti su singola pagina.
+     */
     public void goToPage(int page){
         if (getCurrentPageNumber()!=page) {
             pagingInput.click();
@@ -45,7 +49,8 @@ public class MonthlyTransitGrid extends WebComponent {
     }
 
     public void clickDay(int day){
-        dayRows[day>PAGE_SIZE ? day-1-PAGE_SIZE : day-1].click();
+        //dayRows[day>PAGE_SIZE ? day-1-PAGE_SIZE : day-1].click();
+        dayRows[day-1].click();
     }
 
 
@@ -56,6 +61,9 @@ public class MonthlyTransitGrid extends WebComponent {
         return out;
     }
 
+    /**
+     * @deprecated  tutte le giornate mensili sono presenti su singola pagina.
+     */
     public int getCurrentPageNumber(){
         return Integer.valueOf(pagingInput.getAttribute("value"));
     }
